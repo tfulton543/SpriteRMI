@@ -7,6 +7,7 @@ import java.util.Random;
 /**
  * @author Todd Kelley (revised by Thomas Fulton)
  * This class defines a ball object. 
+ * Test1234565678900
  * It has attributes which define size, colour, and speed, and direction
  * It contains methods to move a ball and to determine where a ball is located.
  * It implements runnable. 
