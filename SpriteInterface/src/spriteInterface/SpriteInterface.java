@@ -1,9 +1,7 @@
 package spriteInterface;
 
-import java.rmi.*;
+import java.rmi.RemoteException;
 
-public interface SpriteInterface extends Remote {
-	
+public interface SpriteInterface {
 	public boolean test(String username) throws RemoteException;
-
 }

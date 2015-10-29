@@ -6,15 +6,12 @@ import spriteInterface.SpriteInterface;
 
 public class Sprite extends UnicastRemoteObject implements SpriteInterface {
 
+	private static final long serialVersionUID = 1L;
+	
 	protected Sprite() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean test(String username) throws RemoteException {
@@ -23,5 +20,4 @@ public class Sprite extends UnicastRemoteObject implements SpriteInterface {
 		}
 		return false;
 	}
-
 }
