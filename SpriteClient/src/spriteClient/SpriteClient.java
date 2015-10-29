@@ -20,12 +20,17 @@ public class SpriteClient  {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
         frame.setVisible(true);
+        
+        sprite.getSpriteLocation(panel.point);
+        
+        
 	}
 	
 	
 
 	public static void main(String[] args) throws RemoteException, NotBoundException {
 		new SpriteClient().panel.animate();
+		
 	}
 }
 

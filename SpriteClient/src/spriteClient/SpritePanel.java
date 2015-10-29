@@ -1,6 +1,8 @@
 package spriteClient;
 
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.NotBoundException;
@@ -11,15 +13,19 @@ import javax.swing.JPanel;
 public class SpritePanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+	
 	SpriteClient sprite;
+	public Point point;
 	
 	public SpritePanel(){
 		addMouseListener(new Mouse());
 	}
 	
-	private void newSprite(MouseEvent event) throws RemoteException, NotBoundException{
-		sprite = new SpriteClient();
+	private Point newSprite(MouseEvent event) throws RemoteException, NotBoundException{
+		//sprite = new SpriteClient();
+		point = MouseInfo.getPointerInfo().getLocation();
 		System.out.println("New Sprite Created");
+		return point;
 	}
 	
 	public void animate(){
