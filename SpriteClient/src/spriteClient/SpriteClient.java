@@ -12,27 +12,25 @@ public class SpriteClient
 {
 	
 	Registry registry = LocateRegistry.getRegistry("localhost", Constants.RMI_PORT);
-	SpriteInterface sprite = (SpriteInterface) registry.lookup(Constants.RMI_ID);
+	SpriteInterface spriteInterface = (SpriteInterface) registry.lookup(Constants.RMI_ID);
 	private JFrame frame;
-	private SpritePanel panel = new SpritePanel();
+	private SpritePanel panel = new SpritePanel(spriteInterface);
 
 	public SpriteClient() throws RemoteException, NotBoundException
 	{
 		
 		frame = new JFrame("Bouncy Sprite");
-		frame.setSize(sprite.getPanelSizeX(), sprite.getPanelSizeY());
+		frame.setSize(spriteInterface.getPanelSizeX(), spriteInterface.getPanelSizeY());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
         frame.setVisible(true);
-        
-        sprite.getSpriteLocation(panel.point);
-        
         
 	}
 	
 	
 
-	public static void main(String[] args) throws RemoteException, NotBoundException {
+	public static void main(String[] args) throws RemoteException, NotBoundException 
+	{
 		new SpriteClient().panel.animate();
 		
 	}

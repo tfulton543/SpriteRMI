@@ -7,6 +7,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import spriteInterface.Constants;
+import spriteInterface.Sprite;
 
 public class SpriteGameServer 
 {

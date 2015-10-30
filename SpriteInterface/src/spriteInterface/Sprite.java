@@ -1,6 +1,7 @@
-package spriteServer;
+package spriteInterface;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
@@ -105,10 +106,11 @@ public class Sprite
 		return SIZE;
 	}
     
-//    public void draw(Graphics g){
-//        g.setColor(color);
-//	    g.fillOval(x, y, SIZE, SIZE);
-//    }
-//
-//    
+    public void draw(Graphics g)
+    {
+        g.setColor(color);
+	    g.fillOval(x, y, SIZE, SIZE);
+    }
+
+    
 }

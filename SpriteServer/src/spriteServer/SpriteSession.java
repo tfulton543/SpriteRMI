@@ -1,10 +1,11 @@
 package spriteServer;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.rmi.*;
-import java.rmi.server.*;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
+import spriteInterface.Sprite;
 import spriteInterface.SpriteInterface;
 
 public class SpriteSession extends UnicastRemoteObject implements SpriteInterface {
@@ -41,11 +42,8 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteInterfac
 	}
 
 	@Override
-	public Point getSpriteLocation(Point point) throws RemoteException {
-		if (point != null){
-			spriteLocationX = point.x;
-			spriteLocationY = point.y;
-		}
-		return null;
+	public ArrayList<Sprite> getSprites() throws RemoteException 
+	{
+		return server.getSpriteList();
 	}
 }
