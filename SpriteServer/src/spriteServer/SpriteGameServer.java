@@ -45,16 +45,17 @@ public class SpriteGameServer
 		{
 			for(Sprite sprite: spriteList)
 			{
-				try
-				{ 
-					move(sprite); 
-					Thread.sleep(60);
-				}
-				catch(InterruptedException e)
-				{
-					e.printStackTrace();
-				}	
+				move(sprite);
 			}
+			
+			try
+			{ 
+				Thread.sleep(60);
+			}
+			catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}	
 		}	
 	}
 	

@@ -18,13 +18,12 @@ public class SpriteClient
 
 	public SpriteClient() throws RemoteException, NotBoundException
 	{
-		
 		frame = new JFrame("Bouncy Sprite");
 		frame.setSize(spriteInterface.getPanelSizeX(), spriteInterface.getPanelSizeY());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
+        frame.setResizable(false);
         frame.setVisible(true);
-        
 	}
 	
 	
