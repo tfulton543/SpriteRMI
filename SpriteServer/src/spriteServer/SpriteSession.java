@@ -10,8 +10,6 @@ import spriteInterface.SpriteInterface;
 public class SpriteSession extends UnicastRemoteObject implements SpriteInterface {
 
 	private static final long serialVersionUID = 1L;
-	private int panelSizeX = 400;
-	private int panelSizeY = 400;
 	//public Point spriteLocation;
 	public int spriteLocationX = 0;
 	public int spriteLocationY = 0;
@@ -34,12 +32,12 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteInterfac
 	
 	@Override
 	public int getPanelSizeX() throws RemoteException {
-		return panelSizeX;
+		return server.getPanelSizeX();
 	}
 
 	@Override
 	public int getPanelSizeY() throws RemoteException {
-		return panelSizeY;
+		return server.getPanelSizeY();
 	}
 
 	@Override

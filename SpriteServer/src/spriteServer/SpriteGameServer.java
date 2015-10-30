@@ -101,4 +101,26 @@ public class SpriteGameServer
 	{
 		return spriteList;
 	}
+
+
+
+
+
+	/**
+	 * @return the panelSizeX
+	 */
+	public int getPanelSizeX() {
+		return panelSizeX;
+	}
+
+
+
+
+
+	/**
+	 * @return the panelSizeY
+	 */
+	public int getPanelSizeY() {
+		return panelSizeY;
+	}
 }
