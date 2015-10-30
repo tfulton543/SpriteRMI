@@ -1,5 +1,7 @@
 package spriteServer;
+import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
 import java.rmi.*;
 import java.rmi.server.*;
 
@@ -10,24 +12,24 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteInterfac
 	private static final long serialVersionUID = 1L;
 	private int panelSizeX = 400;
 	private int panelSizeY = 400;
-	public Point spriteLocation;
+	//public Point spriteLocation;
 	public int spriteLocationX = 0;
 	public int spriteLocationY = 0;
+	SpriteGameServer server;
 	
-	protected SpriteSession() throws RemoteException {
+	public SpriteSession(SpriteGameServer server) throws RemoteException 
+	{
 		super();
+		this.server = server;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean createSprite(String create) throws RemoteException {
-		//while (true){
-			if (create.equals("create")){
-				
-		
+	public boolean createSprite(MouseEvent e) throws RemoteException 
+	{
+		Sprite newSprite = new Sprite(e, Color.BLUE);
+		server.getSpriteList().add(newSprite);
 		return true;
-		}
-		return false;
 	}
 	
 	@Override

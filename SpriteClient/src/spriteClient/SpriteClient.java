@@ -8,13 +8,17 @@ import javax.swing.JFrame;
 import spriteInterface.SpriteInterface;
 import spriteInterface.Constants;
 
-public class SpriteClient  {
+public class SpriteClient  
+{
+	
 	Registry registry = LocateRegistry.getRegistry("localhost", Constants.RMI_PORT);
 	SpriteInterface sprite = (SpriteInterface) registry.lookup(Constants.RMI_ID);
 	private JFrame frame;
 	private SpritePanel panel = new SpritePanel();
 
-	public SpriteClient() throws RemoteException, NotBoundException{
+	public SpriteClient() throws RemoteException, NotBoundException
+	{
+		
 		frame = new JFrame("Bouncy Sprite");
 		frame.setSize(sprite.getPanelSizeX(), sprite.getPanelSizeY());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
