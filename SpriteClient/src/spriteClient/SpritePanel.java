@@ -1,6 +1,5 @@
 package spriteClient;
 
-import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -31,6 +30,12 @@ public class SpritePanel extends JPanel{
 	public void animate(){
 		while(true){
 		repaint();
+		try {
+			Thread.sleep(40);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	}
 	
