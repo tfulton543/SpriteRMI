@@ -10,13 +10,17 @@ import spriteInterface.Constants;
 
 public class SpriteGameServer 
 {
+	private int panelSizeX = 400;
+	private int panelSizeY = 400;
+	private ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
+	
 	
 	protected SpriteGameServer() throws RemoteException 
 	{
 		super();
 	}
 
-	private ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
+	
 	
 	
 	
@@ -40,7 +44,15 @@ public class SpriteGameServer
 		{
 			for(Sprite sprite: spriteList)
 			{
-				move(sprite);
+				try
+				{ 
+					move(sprite); 
+					Thread.sleep(60);
+				}
+				catch(InterruptedException e)
+				{
+					e.printStackTrace();
+				}	
 			}
 		}	
 	}
@@ -59,21 +71,22 @@ public class SpriteGameServer
             sprite.setY(0);
             sprite.setDy(-sprite.getDy());
         }
-        if (sprite.getX() > panel.getPanelSizeX() - sprite.getSize() && sprite.getDx() > 0)
+        if (sprite.getX() > panelSizeX - sprite.getSize() && sprite.getDx() > 0)
         {    
         	//bounce off the right wall
-        	sprite.setX() = panel.getPanelSizeX() - SIZE;
-        	dx = - dx;
+        	sprite.setX(panelSizeX - sprite.getSize());
+        	sprite.setDx(-sprite.getDx());
         }       
-        if (y > panel.getPanelSizeY() - SIZE && dy > 0){
+        if (sprite.getY() > panelSizeY - sprite.getSize() && sprite.getDy() > 0)
+        {
             //bounce off the bottom wall
-        	y = panel.getPanelSizeY() - SIZE;
-        	dy = -dy;
+        	sprite.setY(panelSizeY - sprite.getSize());
+        	sprite.setDy(-sprite.getDy());
         }
 
         //make the ball move
-        x += dx;
-        y += dy;
+        sprite.setX(sprite.getX() + sprite.getDx());
+        sprite.setY(sprite.getY() + sprite.getDy());
     }
 
 

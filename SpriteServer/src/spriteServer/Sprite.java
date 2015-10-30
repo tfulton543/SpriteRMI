@@ -9,7 +9,7 @@ public class Sprite
 
 	public final static Random random = new Random();
 	
-	final static int SIZE = 10;
+	final int SIZE = 10;
 	final static int MAX_SPEED = 5;
 
 	//SpriteSession panel;
@@ -101,7 +101,7 @@ public class Sprite
 	/**
 	 * @return the size
 	 */
-	public static int getSize() {
+	public int getSize() {
 		return SIZE;
 	}
     
