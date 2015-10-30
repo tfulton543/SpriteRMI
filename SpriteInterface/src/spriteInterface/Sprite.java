@@ -3,10 +3,16 @@ package spriteInterface;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.Random;
 
-public class Sprite 
+public class Sprite implements Serializable
 {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public final static Random random = new Random();
 	
