@@ -11,26 +11,21 @@ import spriteInterface.Sprite;
 
 public class SpriteGameServer 
 {
-	private int panelSizeX = 400;
-	private int panelSizeY = 400;
-	private ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
-	
-	
+	private static int panelSizeX = 400;
+	private static int panelSizeY = 400;
+	private static ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
+		
 	protected SpriteGameServer() throws RemoteException 
 	{
 		super();
 	}
 
-	
-	
-	
-	
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException 
 	{
 		SpriteGameServer gameServer = new SpriteGameServer();		
-		SpriteSession sprite = new SpriteSession(gameServer);
+		SpriteGateKeeper gateKeeper = new SpriteGateKeeper();
 		Registry registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
-		registry.bind(Constants.RMI_ID, sprite);
+		registry.bind(Constants.RMI_ID, gateKeeper);
 		System.out.println("Server up up and away!!");
 		
 		
@@ -99,7 +94,7 @@ public class SpriteGameServer
 	/**
 	 * @return the spriteList
 	 */
-	public ArrayList<Sprite> getSpriteList()
+	public static ArrayList<Sprite> getSpriteList()
 	{
 		return spriteList;
 	}
@@ -111,7 +106,7 @@ public class SpriteGameServer
 	/**
 	 * @return the panelSizeX
 	 */
-	public int getPanelSizeX() {
+	public static int getPanelSizeX() {
 		return panelSizeX;
 	}
 
@@ -122,7 +117,7 @@ public class SpriteGameServer
 	/**
 	 * @return the panelSizeY
 	 */
-	public int getPanelSizeY() {
+	public static int getPanelSizeY() {
 		return panelSizeY;
 	}
 }

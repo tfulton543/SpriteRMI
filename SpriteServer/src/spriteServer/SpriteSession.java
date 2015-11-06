@@ -4,46 +4,50 @@ import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-
 import spriteInterface.Sprite;
-import spriteInterface.SpriteInterface;
+import spriteInterface.SpriteSessionInterface;
 
-public class SpriteSession extends UnicastRemoteObject implements SpriteInterface {
-
+public class SpriteSession extends UnicastRemoteObject implements SpriteSessionInterface
+{
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	//public Point spriteLocation;
+	
 	public int spriteLocationX = 0;
 	public int spriteLocationY = 0;
-	SpriteGameServer server;
+	private Color spriteColor = Color.blue;
 	
-	public SpriteSession(SpriteGameServer server) throws RemoteException 
+	public SpriteSession() throws RemoteException
 	{
 		super();
-		this.server = server;
-		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public boolean createSprite(MouseEvent e) throws RemoteException 
 	{
-		Sprite newSprite = new Sprite(e, Color.BLUE);
-		server.getSpriteList().add(newSprite);
+		Sprite newSprite = new Sprite(e, spriteColor);
+		SpriteGameServer.getSpriteList().add(newSprite);
 		return true;
 	}
 	
-	@Override
-	public int getPanelSizeX() throws RemoteException {
-		return server.getPanelSizeX();
+	public int getPanelSizeX() throws RemoteException 
+	{
+		return SpriteGameServer.getPanelSizeX();
 	}
 
-	@Override
-	public int getPanelSizeY() throws RemoteException {
-		return server.getPanelSizeY();
+	public int getPanelSizeY() throws RemoteException 
+	{
+		return SpriteGameServer.getPanelSizeY();
 	}
 
-	@Override
 	public ArrayList<Sprite> getSprites() throws RemoteException 
 	{
-		return server.getSpriteList();
+		return SpriteGameServer.getSpriteList();
+	}
+	
+	@Override
+	public void setColor(Color color)
+	{
+		spriteColor = color;
 	}
 }
