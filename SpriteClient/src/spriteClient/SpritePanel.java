@@ -13,17 +13,17 @@ public class SpritePanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
-	SpriteSessionInterface SpriteSessionInterface;
+	SpriteSessionInterface spriteSessionInterface;
 	
 	public SpritePanel(SpriteSessionInterface SpriteSessionInterface)
 	{
 		addMouseListener(new Mouse());
-		this.SpriteSessionInterface = SpriteSessionInterface;
+		this.spriteSessionInterface = SpriteSessionInterface;
 	}
 	
 	private void newSprite(MouseEvent event) throws RemoteException, NotBoundException
 	{
-		SpriteSessionInterface.createSprite(event);
+		spriteSessionInterface.createSprite(event);
 		System.out.println("New Sprite Created");
 		
 	}
@@ -66,7 +66,7 @@ public class SpritePanel extends JPanel{
 		
 		try 
 		{
-			for(Sprite sprite: SpriteSessionInterface.getSprites())
+			for(Sprite sprite: spriteSessionInterface.getSprites())
 			{
 				sprite.draw(g);
 			}

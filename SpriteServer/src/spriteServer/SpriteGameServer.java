@@ -5,23 +5,50 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+import org.hibernate.boot.spi.MetadataImplementor;
+import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import spriteInterface.Constants;
 import spriteInterface.Sprite;
 
+/**
+ * This class is a server application for a sprite game. It allows users to connect via RMI
+ * and create sprite objects which will bounce around in a box. The server will save sprites 
+ * to a database and read them back in the next time the server is started.
+ * @author Thomas Fulton/Erik Dennis
+ *
+ */
 public class SpriteGameServer 
 {
-	private static int panelSizeX = 400;
-	private static int panelSizeY = 400;
+	/**
+	 * This fixed attribute defines the height of the client window
+	 */
+	private final static int panelSizeX = 400;
+	
+	/**
+	 * This fixed attribute defines the width of the client window
+	 */
+	private final static int panelSizeY = 400;
+	
+	/**
+	 * This list holds the sprite objects that are created by clients and read in from the database
+	 */
 	private static ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
 	
-	
+	/**
+	 * This is the reference to the hibernate Session which is used to perform database I/O
+	 */
+	private static Session hibernateSession;
 		
 	protected SpriteGameServer() throws RemoteException 
 	{
@@ -35,39 +62,74 @@ public class SpriteGameServer
 		SpriteGateKeeper gateKeeper = new SpriteGateKeeper();		
 		Registry registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
 		registry.bind(Constants.RMI_ID, gateKeeper);
-		System.out.println("Server up up and away!!");
-		
+		final StandardServiceRegistry hibernateRegistry = new StandardServiceRegistryBuilder().configure().build();
+		MetadataImplementor meta = (MetadataImplementor) new MetadataSources(hibernateRegistry).addAnnotatedClass(Sprite.class).buildMetadata();
+		SessionFactory factory = meta.buildSessionFactory();
+		hibernateSession = factory.openSession();
+			
+		try
+		{
+			//here we try to load in all the sprites from the database
+			System.out.println("Attempting to load saved sprites...");
+			gameServer.loadSprites();
+			System.out.println("Sprites loaded");
+		}
+		//we should fall into this catch block if the tables do not exist on the database (first time the server is run)
+		catch(SQLGrammarException e)
+		{
+			//create the tables
+			System.out.println("Database tables not found... Creating tables...");
+			new SchemaExport(meta).create(true, true);
+			System.out.println("Tables have been built");
+		}
+			
+		//start the animation loop
+		System.out.println("Server online... Users may now connect");
 		gameServer.animateSprites();
-	}
+	}//end of main
 
-
-	//infinite loop to constantly update all the balls yo
-	@SuppressWarnings("deprecation")
-	private void animateSprites() 
+	
+	
+	/**
+	 * This method loads all the Sprites that have been persisted in the database
+	 * It adds them all to the local ArrayList<Sprite> and should be called upon startup
+	 */
+	private void loadSprites()
 	{
-		Configuration config = new Configuration()
-				.addAnnotatedClass(spriteInterface.Sprite.class)
-				.configure("hibernate.cfg.xml");
+		hibernateSession.beginTransaction();
+		Query allSprites = hibernateSession.createQuery("FROM Sprite");
+		hibernateSession.getTransaction().commit();
+		spriteList = (ArrayList<Sprite>) allSprites.list();
 		
-		new SchemaExport(config).create(true, true);
-		StandardServiceRegistryBuilder sRBuilder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
-		ServiceRegistry sR = sRBuilder.build();
-		SessionFactory factory = config.buildSessionFactory(sR);
-		Session s = factory.getCurrentSession();
-		
+		//here we give the server admin the option to clear the database tables (effectively start a new game)
+		if(JOptionPane.showConfirmDialog(null, "Would you like to start a new game?") == JOptionPane.OK_OPTION)
+		{
+			System.out.println("Deleting saved sprites... ");
+			hibernateSession.beginTransaction();
+			for(Sprite sprite : spriteList)
+			{
+				hibernateSession.delete(sprite);
+			}
+			hibernateSession.getTransaction().commit();
+			spriteList.clear();
+			System.out.println("Sprites have been deleted");
+		}//end of JoptionPane OK confirmation
+	}//end of loadSprites
+	
+
+	//infinite loop which infinitely moves the sprite objects and then saves them to the database
+	private void animateSprites() 
+	{	
 		while(true)
 		{
-			s.beginTransaction();
+			hibernateSession.beginTransaction();
 			for(Sprite sprite: spriteList)
-			{ 
-				
-			    s.save(sprite);
-				
+			{ 		
 				move(sprite);
+			    hibernateSession.save(sprite);				
 			}
-			s.getTransaction().commit();
-			factory.close();
-			StandardServiceRegistryBuilder.destroy(sR);
+			
+			hibernateSession.getTransaction().commit();
 			
 			try
 			{ 
@@ -78,10 +140,10 @@ public class SpriteGameServer
 				e.printStackTrace();
 			}	
 		}	
-	}
+	}//end of animateSprites()
 	
 	
-	public void move(Sprite sprite)
+	private void move(Sprite sprite)
 	{
         // check for bounce and make the sprite bounce if necessary
         if (sprite.getX() < 0 && sprite.getDx() < 0){

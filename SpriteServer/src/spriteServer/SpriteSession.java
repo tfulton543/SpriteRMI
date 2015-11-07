@@ -25,7 +25,10 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteSessionI
 
 	public boolean createSprite(MouseEvent e) throws RemoteException 
 	{
-		Sprite newSprite = new Sprite(e, spriteColor);
+		Sprite newSprite = new Sprite();
+		newSprite.setX(e.getX());
+		newSprite.setY(e.getY());
+		newSprite.setColor(spriteColor);
 		SpriteGameServer.getSpriteList().add(newSprite);
 		return true;
 	}

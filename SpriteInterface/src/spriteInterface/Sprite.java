@@ -2,14 +2,15 @@ package spriteInterface;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.Random;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -35,13 +36,10 @@ public class Sprite implements Serializable
 	private Color color;
 
 
-    public Sprite (MouseEvent e, Color c)
+    public Sprite ()
     {
-        x = e.getX();
-        y = e.getY();
         dx = random.nextInt(2*MAX_SPEED) - MAX_SPEED;
         dy = random.nextInt(2*MAX_SPEED) - MAX_SPEED;
-        color = c;
     }
 
 	/**
@@ -122,7 +120,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the size
 	 */
-	@Column 
+	@Transient
 	public int getSize() {
 		return SIZE;
 	}

@@ -12,9 +12,9 @@
 
 		<property name="hibernate.connection.password">AlgonquinCollege2015</property>
 
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sprite</property>
 
-		<property name="current_session_context_class">sprite</property>
+		<property name="hibernate.current_session_context_class">thread</property>
 
 
 	</session-factory>

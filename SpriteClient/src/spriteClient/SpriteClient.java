@@ -20,34 +20,50 @@ public class SpriteClient
 {
 	private JFrame frame;
 	private JComboBox<Color> colorComboBox;
+	SpriteSessionInterface spriteSessionInterface;
+	SpritePanel panel;
 
 	public SpriteClient() throws RemoteException, NotBoundException
 	{
 		Registry registry = LocateRegistry.getRegistry("localhost", Constants.RMI_PORT);
 		SpriteGateKeeperInterface spriteGateKeeperInterface = (SpriteGateKeeperInterface) registry.lookup(Constants.RMI_ID);
-		final SpriteSessionInterface spriteSessionInterface = spriteGateKeeperInterface.getSession();
-		SpritePanel panel = new SpritePanel(spriteSessionInterface);
-		frame = new JFrame("Bouncy Sprite");
-		colorComboBox = new JComboBox<Color>();
-		colorComboBox.addItem(Color.BLACK);
-		colorComboBox.addItem(Color.RED);
+		spriteSessionInterface = spriteGateKeeperInterface.getSession();
 		
+		//build the display frame and components
+		initialize();
+
+        panel.animate();
+	}
+	
+	
+
+	private void initialize() throws RemoteException, NotBoundException
+	{
+		panel = new SpritePanel(spriteSessionInterface);
+		frame = new JFrame("Bouncy Sprite");
+		
+		//this method instantiates a JComboBox object and fills it with Color options
+		//this allows users to select the color of their sprites on the fly
+		colorComboBox = buildColorComboBox();
+		
+		//actionListener for the colorComboBox
 		colorComboBox.addItemListener(new ItemListener()
 		{		
+			//then the user selects a new color, this method changes the color attribute
+			//stored on the remote game session
 			@Override
 			public void itemStateChanged(ItemEvent e) 
 			{
 				try
 				{
-					System.out.print("hank");
 					spriteSessionInterface.setColor((Color) colorComboBox.getSelectedItem());
-				} catch (RemoteException e1) 
+				}
+				catch (RemoteException e1) 
 				{
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-		});
+			}//end of itemStateChanges
+		});//end of addItemListener
 	        
 		frame.setLayout(new BorderLayout());
 		frame.setSize(spriteSessionInterface.getPanelSizeX(), spriteSessionInterface.getPanelSizeY());
@@ -55,16 +71,39 @@ public class SpriteClient
 		frame.add(BorderLayout.CENTER, panel);
 		frame.add(BorderLayout.SOUTH, colorComboBox);
         frame.setResizable(false);
-        frame.setVisible(true);
-        panel.animate();
+        frame.setVisible(true);	
 	}
-	
-	
+
+
+	/**
+	 * This method builds a JComboBox<Color> and fills it with color options
+	 */
+	private JComboBox<Color> buildColorComboBox() 
+	{
+		JComboBox<Color> newColorComboBox = new JComboBox<Color>();
+		newColorComboBox.addItem(Color.BLACK);
+		newColorComboBox.addItem(Color.BLUE);
+		newColorComboBox.addItem(Color.CYAN);
+		newColorComboBox.addItem(Color.GRAY);
+		newColorComboBox.addItem(Color.GREEN);
+		newColorComboBox.addItem(Color.MAGENTA);
+		newColorComboBox.addItem(Color.ORANGE);
+		newColorComboBox.addItem(Color.PINK);
+		newColorComboBox.addItem(Color.RED);
+		newColorComboBox.addItem(Color.WHITE);
+		newColorComboBox.addItem(Color.YELLOW);
+		
+		return newColorComboBox;
+	}//end of buildColorComboBox
+
+
 
 	public static void main(String[] args) throws RemoteException, NotBoundException 
 	{
 		new SpriteClient();	
-	}
-}
+	}//end of main
+	
+	
+}//end of class
 
 
