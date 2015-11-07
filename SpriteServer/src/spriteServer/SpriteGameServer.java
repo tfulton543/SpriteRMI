@@ -5,6 +5,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import spriteInterface.Constants;
 import spriteInterface.Sprite;
@@ -14,6 +20,8 @@ public class SpriteGameServer
 	private static int panelSizeX = 400;
 	private static int panelSizeY = 400;
 	private static ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
+	
+	
 		
 	protected SpriteGameServer() throws RemoteException 
 	{
@@ -22,26 +30,44 @@ public class SpriteGameServer
 
 	public static void main(String[] args) throws RemoteException, AlreadyBoundException 
 	{
+		
 		SpriteGameServer gameServer = new SpriteGameServer();		
-		SpriteGateKeeper gateKeeper = new SpriteGateKeeper();
+		SpriteGateKeeper gateKeeper = new SpriteGateKeeper();		
 		Registry registry = LocateRegistry.createRegistry(Constants.RMI_PORT);
 		registry.bind(Constants.RMI_ID, gateKeeper);
 		System.out.println("Server up up and away!!");
-		
 		
 		gameServer.animateSprites();
 	}
 
 
 	//infinite loop to constantly update all the balls yo
+	@SuppressWarnings("deprecation")
 	private void animateSprites() 
 	{
+		Configuration config = new Configuration()
+				.addAnnotatedClass(spriteInterface.Sprite.class)
+				.configure("hibernate.cfg.xml");
+		
+		new SchemaExport(config).create(true, true);
+		StandardServiceRegistryBuilder sRBuilder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
+		ServiceRegistry sR = sRBuilder.build();
+		SessionFactory factory = config.buildSessionFactory(sR);
+		Session s = factory.getCurrentSession();
+		
 		while(true)
 		{
+			s.beginTransaction();
 			for(Sprite sprite: spriteList)
-			{
+			{ 
+				
+			    s.save(sprite);
+				
 				move(sprite);
 			}
+			s.getTransaction().commit();
+			factory.close();
+			StandardServiceRegistryBuilder.destroy(sR);
 			
 			try
 			{ 

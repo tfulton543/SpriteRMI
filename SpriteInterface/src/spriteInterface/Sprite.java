@@ -5,7 +5,14 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.Random;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+
+@Entity
 public class Sprite implements Serializable
 {
 
@@ -20,11 +27,13 @@ public class Sprite implements Serializable
 	final static int MAX_SPEED = 5;
 
 	//SpriteSession panel;
+	private int spriteId;
 	private int x;
 	private int y;
 	private int dx;
 	private int dy;
 	private Color color;
+
 
     public Sprite (MouseEvent e, Color c)
     {
@@ -38,6 +47,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the x
 	 */
+    @Column 
 	public int getX() {
 		return x;
 	}
@@ -52,6 +62,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the y
 	 */
+	@Column 
 	public int getY() {
 		return y;
 	}
@@ -66,6 +77,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the dx
 	 */
+	@Column 
 	public int getDx() {
 		return dx;
 	}
@@ -80,6 +92,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the dy
 	 */
+	@Column 
 	public int getDy() {
 		return dy;
 	}
@@ -94,6 +107,7 @@ public class Sprite implements Serializable
 	/**
 	 * @return the color
 	 */
+	@Column 
 	public Color getColor() {
 		return color;
 	}
@@ -108,8 +122,18 @@ public class Sprite implements Serializable
 	/**
 	 * @return the size
 	 */
+	@Column 
 	public int getSize() {
 		return SIZE;
+	}
+	
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	public int getSpriteId(){
+		return spriteId;
+	}
+	
+	public void setSpriteId(int id){
+		this.spriteId = id;
 	}
     
     public void draw(Graphics g)
