@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import spriteInterface.Sprite;
 import spriteInterface.SpriteSessionInterface;
 
+
+/**
+ * This class defines the implementation of the SpriteSessionInterface. 
+ * @author Thomas Fulton
+ * @author Erik Dennis
+ */
 public class SpriteSession extends UnicastRemoteObject implements SpriteSessionInterface
 {
 	/**
@@ -16,6 +22,10 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteSessionI
 	
 	public int spriteLocationX = 0;
 	public int spriteLocationY = 0;
+	
+	/**
+	 * 
+	 */
 	private Color spriteColor = Color.blue;
 	
 	public SpriteSession() throws RemoteException

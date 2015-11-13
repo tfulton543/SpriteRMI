@@ -143,6 +143,11 @@ public class SpriteGameServer
 	}//end of animateSprites()
 	
 	
+	/**
+	 * This method defines the logic which is responsible for moving the sprites.
+	 * It moves a single sprite around the play area, and bounces it off the walls as necessary.
+	 * @param sprite Sprite object that you wish to move
+	 */
 	private void move(Sprite sprite)
 	{
         // check for bounce and make the sprite bounce if necessary
