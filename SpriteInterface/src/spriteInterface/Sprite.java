@@ -12,70 +12,73 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-
 /**
  * This class defines a sprite entity. This entity serves as the primary data
- * model in the sprite 'game' and is annotated so it can be persisted 
- * using hibernate.
+ * model in the sprite 'game' and is annotated so it can be persisted using
+ * hibernate.
  * 
- * It has attributes which define the sprite's size, direction, colour, and speed. 
+ * It has attributes which define the sprite's size, direction, colour, and
+ * speed.
+ * 
  * @author Thomas Fulton
  * @author Erik Dennis
- *
+ * 
  */
 @Entity
-public class Sprite implements Serializable
-{
-	//this long is mandatory because the sprite implements serializable
+public class Sprite implements Serializable {
+	// this long is mandatory because the sprite implements serializable
 	private static final long serialVersionUID = 1L;
 
-	//this Random is used to randomly set the sprite's starting speed and direction
+	// this Random is used to randomly set the sprite's starting speed and
+	// direction
 	private final static Random random = new Random();
-	
-	//this int defines the size of the sprites that are created
+
+	// this int defines the size of the sprites that are created
 	private final int SIZE = 10;
-	
-	//this int defines the maximum speed of a sprite object
+
+	// this int defines the maximum speed of a sprite object
 	private final static int MAX_SPEED = 5;
 
-	//this int serves as the primary key for a sprite on the database
+	// this int serves as the primary key for a sprite on the database
 	private int spriteId;
-	
-	//this int defines the x position of the sprite
+
+	// this int defines the x position of the sprite
 	private int x;
-	
-	//this int defines the y position of the sprite
+
+	// this int defines the y position of the sprite
 	private int y;
-	
-	//this int defines the speed at which the sprite is traveling in the x plane
+
+	// this int defines the speed at which the sprite is traveling in the x
+	// plane
 	private int dx;
-	
-	//this int defines the speed at which the sprite is traveling in the y plane
+
+	// this int defines the speed at which the sprite is traveling in the y
+	// plane
 	private int dy;
-	
-	//this Color defines the color of the sprite object
+
+	// this Color defines the color of the sprite object
 	private Color color;
 
 	/**
-	 * Default constructor. Sets the initial dx and dy (speed values) to
-	 * an initil random value.
+	 * Default constructor. Sets the initial dx and dy (speed values) to an
+	 * initil random value.
 	 */
-    public Sprite ()
-    {
-        dx = random.nextInt(2*MAX_SPEED) - MAX_SPEED;
-        dy = random.nextInt(2*MAX_SPEED) - MAX_SPEED;
-    }
+	public Sprite() {
+		dx = random.nextInt(2 * MAX_SPEED) - MAX_SPEED;
+		dy = random.nextInt(2 * MAX_SPEED) - MAX_SPEED;
+	}
 
 	/**
 	 * @return the x
 	 */
-    @Column 
+	@Column
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * @param x the x to set
+	 * @param x
+	 *            the x to set
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -84,13 +87,14 @@ public class Sprite implements Serializable
 	/**
 	 * @return the y
 	 */
-	@Column 
+	@Column
 	public int getY() {
 		return y;
 	}
 
 	/**
-	 * @param y the y to set
+	 * @param y
+	 *            the y to set
 	 */
 	public void setY(int y) {
 		this.y = y;
@@ -99,13 +103,14 @@ public class Sprite implements Serializable
 	/**
 	 * @return the dx
 	 */
-	@Column 
+	@Column
 	public int getDx() {
 		return dx;
 	}
 
 	/**
-	 * @param dx the dx to set
+	 * @param dx
+	 *            the dx to set
 	 */
 	public void setDx(int dx) {
 		this.dx = dx;
@@ -114,13 +119,14 @@ public class Sprite implements Serializable
 	/**
 	 * @return the dy
 	 */
-	@Column 
+	@Column
 	public int getDy() {
 		return dy;
 	}
 
 	/**
-	 * @param dy the dy to set
+	 * @param dy
+	 *            the dy to set
 	 */
 	public void setDy(int dy) {
 		this.dy = dy;
@@ -129,13 +135,14 @@ public class Sprite implements Serializable
 	/**
 	 * @return the color
 	 */
-	@Column 
+	@Column
 	public Color getColor() {
 		return color;
 	}
 
 	/**
-	 * @param color the color to set
+	 * @param color
+	 *            the color to set
 	 */
 	public void setColor(Color color) {
 		this.color = color;
@@ -148,34 +155,37 @@ public class Sprite implements Serializable
 	public int getSize() {
 		return SIZE;
 	}
-	
+
 	/**
-	 * Returns the sprite's ID value. This value serves as the primary key
-	 * and is automatically generated.
+	 * Returns the sprite's ID value. This value serves as the primary key and
+	 * is automatically generated.
+	 * 
 	 * @return int value of this sprite's spriteID
 	 */
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	public int getSpriteId(){
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public int getSpriteId() {
 		return spriteId;
 	}
-	
+
 	/**
 	 * 
-	 * @param id the value to set to the spriteID
+	 * @param id
+	 *            the value to set to the spriteID
 	 */
-	public void setSpriteId(int id){
+	public void setSpriteId(int id) {
 		this.spriteId = id;
 	}
-    
+
 	/**
-	 * This method draws an oval representing the location and size of the sprite object. 
+	 * This method draws an oval representing the location and size of the
+	 * sprite object.
+	 * 
 	 * @param g
 	 */
-    public void draw(Graphics g)
-    {
-        g.setColor(color);
-	    g.fillOval(x, y, SIZE, SIZE);
-    }
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(x, y, SIZE, SIZE);
+	}
 
-    
-}//end of class
+}// end of class

@@ -7,24 +7,23 @@ import spriteInterface.SpriteGateKeeperInterface;
 import spriteInterface.SpriteSessionInterface;
 
 /**
- * This class defines the implementation of the SpriteGateKeeperInterface. 
- * This class is the RMI remote object 
+ * This class defines the implementation of the SpriteGateKeeperInterface. This
+ * class is the RMI remote object
+ * 
  * @author Thomas Fulton
  * @author Erik Dennis
  */
-public class SpriteGateKeeper extends UnicastRemoteObject implements SpriteGateKeeperInterface
-{
+public class SpriteGateKeeper extends UnicastRemoteObject implements
+		SpriteGateKeeperInterface {
 	private static final long serialVersionUID = 1L;
 
-	protected SpriteGateKeeper() throws RemoteException
-	{
+	protected SpriteGateKeeper() throws RemoteException {
 		super();
-	}//end of constructor
-	
+	}// end of constructor
+
 	@Override
-	public SpriteSessionInterface getSession() throws RemoteException
-	{	
+	public SpriteSessionInterface getSession() throws RemoteException {
 		return (SpriteSessionInterface) new SpriteSession();
 	}
 
-}//end of class
+}// end of class
