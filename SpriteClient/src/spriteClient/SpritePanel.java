@@ -5,7 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+
 import javax.swing.JPanel;
+
 import spriteInterface.Sprite;
 import spriteInterface.SpriteSessionInterface;
 
@@ -29,12 +31,14 @@ public class SpritePanel extends JPanel {
 	 * Constructor. Accepts a SpriteSessionInterface argument from the client
 	 * and assigns it to a local reference. Also adds the mouseListener which
 	 * watched for clicks and creates new sprites at that location.
+	 * Also sets the size of the panel to the sie defined by the server.
 	 * 
 	 * @param SpriteSessionInterface
 	 *            object of type SpriteSessionInterface which has been retrieved
 	 *            from the RMI registry
+	 * @throws RemoteException 
 	 */
-	public SpritePanel(SpriteSessionInterface SpriteSessionInterface) {
+	public SpritePanel(SpriteSessionInterface SpriteSessionInterface) throws RemoteException {
 		addMouseListener(new Mouse());
 		this.spriteSessionInterface = SpriteSessionInterface;
 	}

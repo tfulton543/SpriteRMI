@@ -109,8 +109,12 @@ public class SpriteClient {
 		});// end of addItemListener
 
 		frame.setLayout(new BorderLayout());
-		frame.setSize(spriteSessionInterface.getPanelSizeX(),
-				spriteSessionInterface.getPanelSizeY());
+		
+		//sets the size of the view frame to that which is defined by the server
+		//added minor correction to account for the width of the spriate and the new
+		//combobox at the botom of the frame
+		frame.setSize(spriteSessionInterface.getPanelSizeX() + 6,
+				spriteSessionInterface.getPanelSizeY() + 55);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(BorderLayout.CENTER, panel);
 		frame.add(BorderLayout.SOUTH, colorComboBox);
