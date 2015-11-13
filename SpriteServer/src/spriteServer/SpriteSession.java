@@ -63,4 +63,16 @@ public class SpriteSession extends UnicastRemoteObject implements SpriteSessionI
 	{
 		spriteColor = color;
 	}
-}
+
+	@Override
+	public ArrayList<Color> getAvailbleColours() throws RemoteException 
+	{
+		return SpriteGameServer.getAvailableColours();
+	}
+
+	@Override
+	public boolean removeColor(Color colour) 
+	{		
+		return SpriteGameServer.getAvailableColours().remove(colour);
+	}
+}//end of class

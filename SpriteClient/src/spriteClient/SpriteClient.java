@@ -52,13 +52,16 @@ public class SpriteClient
 		colorComboBox.addItemListener(new ItemListener()
 		{		
 			//then the user selects a new color, this method changes the color attribute
-			//stored on the remote game session
+			//stored on the remote game session removes the colour from the available colours list, 
+			//and disables the selection
 			@Override
 			public void itemStateChanged(ItemEvent e) 
 			{
 				try
 				{
 					spriteSessionInterface.setColor((Color) colorComboBox.getSelectedItem());
+					spriteSessionInterface.removeColor((Color) colorComboBox.getSelectedItem());
+					colorComboBox.setEnabled(false);
 				}
 				catch (RemoteException e1) 
 				{
@@ -79,23 +82,19 @@ public class SpriteClient
 
 	/**
 	 * This method builds a JComboBox<Color> and fills it with color options
+	 * @throws RemoteException 
 	 */
-	private JComboBox<Color> buildColorComboBox() 
+	private JComboBox<Color> buildColorComboBox() throws RemoteException
 	{
-		JComboBox<Color> newColorComboBox = new JComboBox<Color>();
-		newColorComboBox.addItem(Color.BLACK);
-		newColorComboBox.addItem(Color.BLUE);
-		newColorComboBox.addItem(Color.CYAN);
-		newColorComboBox.addItem(Color.GRAY);
-		newColorComboBox.addItem(Color.GREEN);
-		newColorComboBox.addItem(Color.MAGENTA);
-		newColorComboBox.addItem(Color.ORANGE);
-		newColorComboBox.addItem(Color.PINK);
-		newColorComboBox.addItem(Color.RED);
-		newColorComboBox.addItem(Color.WHITE);
-		newColorComboBox.addItem(Color.YELLOW);
+		JComboBox<Color> colourComboBox = new JComboBox<Color>();
 		
-		return newColorComboBox;
+		//loops through the colours that are available on the server and adds them to the comboBox
+		for (Color color : spriteSessionInterface.getAvailbleColours())
+		{
+			colourComboBox.addItem(color);
+		}
+		
+		return colourComboBox;
 	}//end of buildColorComboBox
 
 

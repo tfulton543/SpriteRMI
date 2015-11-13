@@ -1,5 +1,6 @@
 package spriteServer;
 
+import java.awt.Color;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -41,6 +42,11 @@ public class SpriteGameServer
 	private final static int panelSizeY = 400;
 	
 	/**
+	 * This list store the available colours which clients can use
+	 */
+	private static ArrayList<Color> availableColours;
+	
+	/**
 	 * This list holds the sprite objects that are created by clients and read in from the database
 	 */
 	private static ArrayList<Sprite> spriteList = new ArrayList<Sprite>();
@@ -72,7 +78,7 @@ public class SpriteGameServer
 			//here we try to load in all the sprites from the database
 			System.out.println("Attempting to load saved sprites...");
 			gameServer.loadSprites();
-			System.out.println("Sprites loaded");
+			System.out.println("Loading complete");
 		}
 		//we should fall into this catch block if the tables do not exist on the database (first time the server is run)
 		catch(SQLGrammarException e)
@@ -82,6 +88,8 @@ public class SpriteGameServer
 			new SchemaExport(meta).create(true, true);
 			System.out.println("Tables have been built");
 		}
+		
+		gameServer.buildColourList();
 			
 		//start the animation loop
 		System.out.println("Server online... Users may now connect");
@@ -89,7 +97,26 @@ public class SpriteGameServer
 	}//end of main
 
 	
-	
+	/**
+	 * This method instantiates the availableColours array and adds all the colours to it. 
+	 */
+	private void buildColourList() 
+	{
+		availableColours = new ArrayList<Color>();
+		
+		availableColours.add(Color.BLACK);
+		availableColours.add(Color.BLUE);
+		availableColours.add(Color.CYAN);
+		availableColours.add(Color.GRAY);
+		availableColours.add(Color.GREEN);
+		availableColours.add(Color.MAGENTA);
+		availableColours.add(Color.ORANGE);
+		availableColours.add(Color.PINK);
+		availableColours.add(Color.RED);
+		availableColours.add(Color.WHITE);
+		availableColours.add(Color.YELLOW);	
+	}//end of buildColourList
+
 	/**
 	 * This method loads all the Sprites that have been persisted in the database
 	 * It adds them all to the local ArrayList<Sprite> and should be called upon startup
@@ -213,4 +240,11 @@ public class SpriteGameServer
 	public static int getPanelSizeY() {
 		return panelSizeY;
 	}
-}
+
+	/**
+	 * @return the availableColours
+	 */
+	public static ArrayList<Color> getAvailableColours() {
+		return availableColours;
+	}
+}//end of class

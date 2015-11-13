@@ -24,8 +24,7 @@ public class SpritePanel extends JPanel{
 	private void newSprite(MouseEvent event) throws RemoteException, NotBoundException
 	{
 		spriteSessionInterface.createSprite(event);
-		System.out.println("New Sprite Created");
-		
+		System.out.println("New Sprite Created");		
 	}
 	
 	public void animate() throws RemoteException
