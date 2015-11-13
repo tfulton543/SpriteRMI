@@ -11,6 +11,7 @@ import java.rmi.registry.Registry;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import spriteInterface.Constants;
 import spriteInterface.SpriteGateKeeperInterface;
@@ -25,7 +26,8 @@ public class SpriteClient
 
 	public SpriteClient() throws RemoteException, NotBoundException
 	{
-		Registry registry = LocateRegistry.getRegistry("localhost", Constants.RMI_PORT);
+		String registryIP = JOptionPane.showInputDialog("Enter Server IP");
+		Registry registry = LocateRegistry.getRegistry(registryIP, Constants.RMI_PORT);
 		SpriteGateKeeperInterface spriteGateKeeperInterface = (SpriteGateKeeperInterface) registry.lookup(Constants.RMI_ID);
 		spriteSessionInterface = spriteGateKeeperInterface.getSession();
 		
