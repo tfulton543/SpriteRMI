@@ -68,15 +68,6 @@ public interface SpriteSessionInterface extends Remote {
 	public ArrayList<Sprite> getSprites() throws RemoteException;
 
 	/**
-	 * This method queries the game server to get the list of available colours
-	 * 
-	 * @return ArrayList<Color> corresponding to the list of colours that are
-	 *         available to be used
-	 * @throws RemoteException
-	 */
-	public ArrayList<Color> getAvailbleColours() throws RemoteException;
-
-	/**
 	 * This method removes a colour from the available colours list on the
 	 * server.
 	 * 

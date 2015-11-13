@@ -27,10 +27,12 @@ public class SpriteSession extends UnicastRemoteObject implements
 	/**
 	 * 
 	 */
-	private Color spriteColor = Color.blue;
+	private Color spriteColor;
 
 	public SpriteSession() throws RemoteException {
 		super();
+		spriteColor = SpriteGameServer.getAvailableColours().get(0);
+		removeColor(spriteColor);
 	}
 
 	public boolean createSprite(MouseEvent e) throws RemoteException {
@@ -57,11 +59,6 @@ public class SpriteSession extends UnicastRemoteObject implements
 	@Override
 	public void setColor(Color color) {
 		spriteColor = color;
-	}
-
-	@Override
-	public ArrayList<Color> getAvailbleColours() throws RemoteException {
-		return SpriteGameServer.getAvailableColours();
 	}
 
 	@Override
